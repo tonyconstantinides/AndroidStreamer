@@ -2,6 +2,7 @@ package com.cii.androidstreamer.pipline;
 
 import com.cii.androidstreamer.bins.AsBin;
 import com.cii.androidstreamer.bus.AsBus;
+import com.cii.androidstreamer.elements.AsElement;
 
 public class AsPipeLine extends AsBin {
     AsBus mBus = null;

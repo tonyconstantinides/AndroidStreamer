@@ -173,7 +173,7 @@ public class FullscreenActivity extends AppCompatActivity {
         mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY);
 
         // The As sample
-        sample.setupPipeline();
+        sample.setupPipeline(mBus);
     }
 
     /**
