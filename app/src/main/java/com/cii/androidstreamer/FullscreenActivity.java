@@ -8,11 +8,16 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.cii.androidstreamer.samples.ImageSourceSample;
+import com.cii.androidstreamer.bus.AsBus;
+
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 public class FullscreenActivity extends AppCompatActivity {
+    AsBus mBus = new AsBus();
+
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -24,6 +29,8 @@ public class FullscreenActivity extends AppCompatActivity {
      * user interaction before hiding the system UI.
      */
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
+
+    private ImageSourceSample sample;
 
     /**
      * Some older devices needs a small delay between UI widget updates
@@ -118,6 +125,20 @@ public class FullscreenActivity extends AppCompatActivity {
         delayedHide(100);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        mBus.register(this);
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mBus.unregister(this);
+    }
+
+
     private void toggle() {
         if (mVisible) {
             hide();
@@ -150,6 +171,9 @@ public class FullscreenActivity extends AppCompatActivity {
         // Schedule a runnable to display UI elements after a delay
         mHideHandler.removeCallbacks(mHidePart2Runnable);
         mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY);
+
+        // The As sample
+        sample.setupPipeline();
     }
 
     /**
